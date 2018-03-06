@@ -131,6 +131,25 @@
     [:div.button
      [:button {:type "submit"} "Search"]]]])
 
+(defn election-data [{:keys [state city]}]
+  ; make state and city lower case
+  (clojure.string/lower-case state)
+  (clojure.string/lower-case city)
+  ; pass args to api
+  (def tvote (str "https://api.turbovote.org/elections/upcoming?district-divisions=ocd-division/country:us/state:" state "/place:" city))
+
+  ; get back elections
+  [:div {:class "election-data"}
+   [:h1 "Next elections"]
+   [:p ]]
+  )
+
+(defn search-results [request]
+  ; display elections
+  (html5
+   (header request)
+   (election-data request)))
+
 (defn page [request]
   (html5
    (header request)
